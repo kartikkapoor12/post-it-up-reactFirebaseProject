@@ -38,7 +38,10 @@
       height: 90%;
       padding: 20px;
     }
-    
+    .headerLink {
+      font-size: 1rem;
+    }
+  
   }
 
   
@@ -107,6 +110,7 @@
   
   .loginPage p {
     font-size: 30px;
+    text-align: center;
   }
   
   /* GOOGLE BUTTOn */

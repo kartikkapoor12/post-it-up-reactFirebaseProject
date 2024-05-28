@@ -62,7 +62,7 @@ function Home() {
                                {currentUser[0]&&<div className="deletePost"> <button onClick={() => deletePost(post.id, post.author.email)}>&#128465;</button></div>}
                             </div>
                             <div className="postTextContainer"> {post?.postText}</div>
-                            <h4>@{post?.author?.name}</h4>
+                            <h5>@{post?.author?.name}</h5>
                         </div>
                     )
                 })}

@@ -27,25 +27,29 @@ export default function ButtonAppBar() {
     console.log(err);
    }
   }
- 
+ const styleObj = {
+  padding:0
+ }
   const currentUser = useContext(UserContext);    //since in context we are passing array of login user state 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor:"black"}}>
         <Toolbar>
         
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Post-It-Up
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight:900}}>
+            PostItUp
           </Typography>
          
-          <Link to="/">Home</Link>
-        {  currentUser[0] && <Link to = "createpost">Create</Link>}
-       { !currentUser[0] && < Link to = "login"> <Button  variant="contained" color="success" >Login</Button></Link>}
+          <Link className = "headerLink"  to="/">Home</Link>
+        {  currentUser[0] && <Link className = "headerLink" to = "createpost">Create</Link>}
+       { !currentUser[0] && < Link className = "headerLink" to = "login"> <Button sx={styleObj}variant="contained" color="success" >Login</Button></Link>}
+       { currentUser[0] &&
+       <Button size="small"  variant="contained" color="success" sx={{marginRight:'1rem'}} onClick={logout}>LogOut</Button>}
 
-       { currentUser[0] && <Button  variant="contained" color="success" sx={{marginRight:'1rem'}} onClick={logout}>Log Out</Button>}
+       
 
              {  currentUser[0] && <IconButton sx={{ p: 0}}>
-                <Avatar alt="Remy Sharp" src={auth.currentUser.photoURL}  />
+                <Avatar alt={auth.currentUser.displayName} src={auth.currentUser.photoURL}  />
               </IconButton>}
         </Toolbar>
       </AppBar>
