@@ -13,28 +13,28 @@ function Home() {
     
     const currentUser = useContext(UserContext);  
     useEffect(() => {
-
-        async function loadData() {
-
-            const data = await getDocs(postCollectionRef);
-            console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-            setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-            setShowLoader(false);
-        }
         try {
             loadData();
         } catch (err) {
             console.log(err);
         }
-    });
+    },[]);
+    async function loadData() {
 
-
+        const data = await getDocs(postCollectionRef);
+        console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setShowLoader(false);
+    }
 
     const deletePost = async (id, postUserEmail) => {
         const deletedDoc = doc(db, "posts", id)
         try {
             if (auth.currentUser.email === postUserEmail)
-                await deleteDoc(deletedDoc);
+                await deleteDoc(deletedDoc).then(()=>{
+                    loadData();
+            });
+
             else {
                 alert("Not authorized to delete this post!")
             }
@@ -48,8 +48,8 @@ function Home() {
         <>
             <div className="homePage">
                 {showLoader &&
-                    <ReactLoading type="spin" color="black" className="spinLoader"
-                        height={100} width={50} />
+                    <ReactLoading type="spinningBubbles" color="black" className="spinLoader"
+                        height={100} width={80}/>
                 }
 
                 {postList.map((post) => {

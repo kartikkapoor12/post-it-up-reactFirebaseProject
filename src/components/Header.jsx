@@ -5,11 +5,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {Link } from 'react-router-dom'
 import { UserContext } from '../App';
-import { useContext } from 'react';
+import { useContext , useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {auth} from '../config/firebase'
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import HomeIcon from '@mui/icons-material/Home';
 
 import IconButton from '@mui/material/IconButton';
 
@@ -27,9 +28,13 @@ export default function ButtonAppBar() {
     console.log(err);
    }
   }
- const styleObj = {
-  padding:0
- }
+  const [smallDevice, setSmallDevice] = useState(false);  
+
+  useEffect (()=>{
+    if(window.innerWidth < 400)
+       setSmallDevice(true);
+  },[]);
+
   const currentUser = useContext(UserContext);    //since in context we are passing array of login user state 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -40,13 +45,13 @@ export default function ButtonAppBar() {
             PostItUp
           </Typography>
          
-          <Link className = "headerLink"  to="/">Home</Link>
-        {  currentUser[0] && <Link className = "headerLink" to = "createpost">Create</Link>}
-       { !currentUser[0] && < Link className = "headerLink" to = "login"> <Button sx={styleObj}variant="contained" color="success" >Login</Button></Link>}
-       { currentUser[0] &&
-       <Button size="small"  variant="contained" color="success" sx={{marginRight:'1rem'}} onClick={logout}>LogOut</Button>}
+      <Link className = "headerLink"  to="/">Home</Link>
+       {  currentUser[0] && <Link className = "headerLink" to = "createpost">Create</Link>}
+       { !currentUser[0] && < Link className = "headerLink" to = "login"> <Button sx={{padding:0}}variant="contained" color="success" >Login</Button></Link>}
+       { currentUser[0] && !smallDevice &&
+       <Button size="small"  variant="contained" color="success" sx={{marginRight:'1rem'}} onClick={logout}>Log Out</Button>}
+       { currentUser[0] && smallDevice && <Button variant="contained" color="success" sx={{marginRight:'0.4rem', fontSize:'.8rem', padding:'1px'}} onClick={logout}>Log Out</Button>}
 
-       
 
              {  currentUser[0] && <IconButton sx={{ p: 0}}>
                 <Avatar alt={auth.currentUser.displayName} src={auth.currentUser.photoURL}  />
