@@ -47,7 +47,7 @@ export default function ButtonAppBar() {
          
       <Link className = "headerLink"  to="/">Home</Link>
        {  currentUser[0] && <Link className = "headerLink" to = "createpost">Create</Link>}
-       { !currentUser[0] && < Link className = "headerLink" to = "login"> <Button sx={{padding:0}}variant="contained" color="success" >Login</Button></Link>}
+       { !currentUser[0] && < Link className = "headerLink" to = "login"> <Button variant="contained" color="success" >Login</Button></Link>}
        { currentUser[0] && !smallDevice &&
        <Button size="small"  variant="contained" color="success" sx={{marginRight:'1rem'}} onClick={logout}>Log Out</Button>}
        { currentUser[0] && smallDevice && <Button variant="contained" color="success" sx={{marginRight:'0.4rem', fontSize:'.8rem', padding:'1px'}} onClick={logout}>Log Out</Button>}
